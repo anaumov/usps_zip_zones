@@ -1,2 +1,1 @@
-class ExceptionDistance < ActiveRecord::Base
-end
+class ExceptionDistance < ActiveRecord::Base; end

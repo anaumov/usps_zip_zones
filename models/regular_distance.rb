@@ -1,2 +1,1 @@
-class RegularDistance < ActiveRecord::Base
-end
+class RegularDistance < ActiveRecord::Base; end
