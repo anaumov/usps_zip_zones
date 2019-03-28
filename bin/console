@@ -1,0 +1,7 @@
+#!/usr/bin/env ruby
+
+require "bundler/setup"
+require "usps_zip_zones"
+
+require "irb"
+IRB.start(__FILE__)
