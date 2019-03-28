@@ -37,7 +37,6 @@ namespace :db do
   end
 
   task :seed_regular do
-    # seed data
     puts "Started at #{Time.now}"
     regular_distances_data = File.read('db/seed/Format2.txt').split("\r\n")
     values = []
@@ -53,6 +52,28 @@ namespace :db do
     ActiveRecord::Base.establish_connection(app_config)
     column_names = %i(zip_from zip_to zone exception filter)
     insert_sql = "INSERT INTO regular_distances (#{column_names.join(',')}) VALUES #{values.join(', ')}"
+    ActiveRecord::Base.connection.execute(insert_sql)
+    puts "Finished at #{Time.now}"
+  end
+
+  task :seed_exception do
+    puts "Started at #{Time.now}"
+    exception_distances_data = File.read('db/seed/exception.txt').split("\r\n")
+    values = []
+    exception_distances_data.each_with_index do |line, index|
+      next if index.zero?
+
+      origin_zip_from = line[0..4]
+      origin_zip_to = line[5..9]
+      dest_zip_from = line[10..14]
+      dest_zip_to = line[15..19]
+      zone = line[20..21]
+      filter = line[22..23]
+      values << "('[#{origin_zip_from}, #{origin_zip_to}]', '[#{dest_zip_from}, #{dest_zip_to}]', '#{zone}', '#{filter}')"
+    end
+    ActiveRecord::Base.establish_connection(app_config)
+    column_names = %i(zip_from zip_to zone filter)
+    insert_sql = "INSERT INTO exception_distances (#{column_names.join(',')}) VALUES #{values.join(', ')}"
     ActiveRecord::Base.connection.execute(insert_sql)
     puts "Finished at #{Time.now}"
   end
