@@ -1,5 +1,5 @@
 source 'https://rubygems.org'
 
-gem 'rake'
+gemspec
 gem 'pg'
 gem 'activerecord'
